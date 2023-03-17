@@ -1,6 +1,3 @@
-Tema 2 POO - Frant Madalina 324CB
-
-
 In clasa Word sunt implementate: constructor cu parametri (toate atributele)
 si getteri pentru toate atributele. Este suprascrisa metoda compareTo astfel 
 incat comparatia intre 2 obiecte de tip Word sa se faca dupa atributul word, 
