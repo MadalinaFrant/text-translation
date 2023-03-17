@@ -1,0 +1,140 @@
+Tema 2 POO - Frant Madalina 324CB
+
+
+In clasa Word sunt implementate: constructor cu parametri (toate atributele)
+si getteri pentru toate atributele. Este suprascrisa metoda compareTo astfel 
+incat comparatia intre 2 obiecte de tip Word sa se faca dupa atributul word, 
+in ordine alfabetica. Este suprascrisa si metoda toString care va returna 
+un String compus din toate atributele unui Word. 
+
+In clasa Definition sunt implementate: constructor cu parametri (toate atributele)
+si getteri pentru toate atributele. Este suprascrisa metoda compareTo astfel 
+incat comparatia intre 2 obiecte de tip Definition sa se faca dupa atributul year, 
+in ordine crescatoare. Este suprascrisa si metoda toString care va returna 
+un String compus din toate atributele unei Definition. 
+
+Clasa Dictionary are atributul map, de tip HashMap<String, ArrayList<Word>>,
+in care se vor retine informatiile unui dictionar astfel: cheia HashMap-ului
+va fi limba fiecarui dictionar, iar valoarea corespunzatoare va fi o lista de 
+cuvinte(de tip Word). In cadrul acestei clase au fost implementate urmatoarele 
+metode: 
+
+Metoda readDictionary primeste ca parametru un director din care va citi, 
+folosind gson, din fiecare fisier de tip JSON din acesta, cuvintele 
+corespunzatoare anumitei limbi astfel: pentru fiecare fisier extrage 
+limba din numele acestuia (primele 2 caractere), apoi citeste din acesta 
+lista de cuvinte corespunzatoare acestei limbi. Se va adauga in map 
+perechea limba - lista de cuvinte. 
+
+Metoda printDictionary afiseaza dictionarul, adica HashMap-ul in care au fost salvate 
+cuvintele.
+
+Metoda addWord adauga cuvantul primit ca parametru in dictionar, returnand
+true daca s-a adaugat cuvantul in dictionar sau false daca exista deja cuvantul
+in dictionar. Daca map-ul contine limba primita ca parametru, atunci se verifica
+daca exista deja cuvantul (orice forma a acestuia) in intrarea corespunzatoare 
+limbii. Daca da, se verifica daca trebuie adaugata o definitie pentru cuvant, 
+utilizand rezultatul metodei addDefinitionForWord. Astfel, daca a fost adaugata
+o definitie se va returna true (cuvantul a fost actualizat), iar daca nu atunci se
+va returna false (cuvantul deja exista). Daca cuvantul nu exista in lista 
+corespunzatoare, atunci este adaugat la aceasta. In cazul in care nu exista 
+limba in dictionar, se va crea o noua lista la care se adauga cuvantul, iar 
+apoi se va adauga in map perechea limba - lista de cuvinte creata. 
+
+Metoda removeWord sterge cuvantul primit ca parametru din dictionar, returnand 
+true daca s-a sters cuvantul in dictionar sau false daca nu exista cuvantul in 
+dictionar. Daca map-ul nu contine limba primita ca parametru, atunci se lanseaza 
+o exceptie cu un mesaj corespunzator. Altfel, se verifica daca exista cuvantul 
+(orice forma a acestuia) in lista corespunzatoare limbii. Daca este gasit, atunci 
+acesta va fi sters din lista. Daca cuvantul nu a fost gasit, atunci se returneaza 
+false, altfel se verifica daca lista devine goala dupa stergerea cuvantului, in 
+caz afirmativ eliminand intrarea corespunzatoare limbii din dictionar. 
+
+Metoda addDefinitionForWord adauga o definitie noua pentru un cuvant dat ca 
+parametru, returnand true daca s-a adaugat definitia sau false daca exista o
+definitie din acelasi dictionar. Daca map-ul nu contine limba primita ca parametru,
+atunci se lanseaza o exceptie cu un mesaj corespunzator. Altfel, se verifica daca
+exista cuvantul (orice forma a acestuia) in lista corespunzatoare limbii. Daca este
+gasit, atunci se verifica daca acesta are deja definitia identificata unic prin 
+nume, tip si an. Daca da, atunci se verifica definitiile/sinonimele si se adauga 
+la acestea toate definitiile/sinonimele care nu exista deja. Astfel, daca a fost 
+adaugata o definitie se va returna true, iar daca nu atunci se va returna false 
+(definitia deja exista). Daca definitia data ca parametru nu exista deja in lista 
+definitiilor atunci aceasta va fi adaugata, returnandu-se true. Daca cuvantul nu 
+a fost gasit in lista corespunzatoare, atunci se returneaza false. 
+
+Metoda removeDefinition sterge definitia data ca parametru a cuvantului dat ca 
+parametru, returnand true daca s-a sters definitia sau false daca nu exista o 
+definitie din dictionarul primit ca parametru. Daca map-ul nu contine limba primita
+ca parametru, atunci se lanseaza o exceptie cu un mesaj corespunzator. Parametrul 
+reprezentand definitia ce trebuie stearsa va fi dat astfel: nume@tip@an pentru a 
+putea identifica aceasta definitie. Se verifica daca exista cuvantul (orice forma
+a acestuia) in lista corespunzatoare limbii. Daca este gasit, atunci se verifica daca
+acesta are definitia identificata unic prin nume, tip si an. In caz afirmativ, aceasta 
+se sterge din lista definitiilor si se returneaza true. Daca nu a fost gasita definitia 
+sau cuvantul nu exista in dictionar, atunci se returneaza false. 
+
+Metoda translateWord intoarce traducerea cuvantului word din limba fromLanguage in limba
+toLanguage. Daca map-ul nu contine o limba din cele 2 primite ca parametri (in afara de 
+engleza deoarece nu exista un dictionar pentru engleza; cu ajutorul campului word_en 
+se realizeaza legatura dintre 2 dictionare, adica traducerea), atunci se lanseaza o
+exceptie cu un mesaj corespunzator. Apoi se verifica daca limba din care se traduce 
+este engleza, caz in care se verifica pentru toate cuvintele din limba in care se traduce 
+daca cuvantul in engleza corespunde cuvantului de tradus. Daca este gasit un astfel de 
+cuvant, adica traducerea, acesta va fi returnat. In caz contrar, se intoarce null. 
+Daca limba din care se traduce nu este engleza, atunci se verifica pentru fiecare 
+cuvant (orice forma a acestuia) daca cuvantul in engleza corespunde cuvantului de tradus.
+Se verifica mai intai campul word (forma la infinitiv sau singular), returnand traducerea
+in cazul in care este gasita. Daca forma word a cuvantului nu este egala cu cuvantul de 
+tradus, atunci se vor verifica formele de singular si plural. Se utilizeaza un index 
+pentru a itera prin lista formata de formele la singular si plural, in functie de 
+acesta returnand forma corespunzatoare a cuvantului tradus. Daca nu este gasita o 
+traducere, se returneaza null. 
+
+Metoda translateSentence intoarce traducerea propozitiei sentence din limba fromLanguage
+in limba toLanguage. Daca map-ul nu contine o limba din cele 2 primite ca parametri (in 
+afara de engleza), atunci se lanseaza o exceptie cu un mesaj corespunzator. Se ia 
+fiecare cuvant din propozitie si, daca are traducere, se adauga aceasta la Stringul ce
+va fi returnat, in caz contrar se adauga cuvantul netradus la acest String.
+
+Metoda translateSentences intoarce traducerea propozitiei sentence din limba fromLanguage
+in limba toLanguage si inca alte 2 variante de traducere folosind sinonimele cuvintelor. 
+Se genereaza traducerea propozitiei utilizand metoda translateSentence care va fi 
+adaugata la lista variantelor de traducere. Daca limba in care s-a tradus este engleza,
+se returneaza doar traducerea initiala deoarece nu exista un dictionar, si deci nici 
+sinonime pentru engleza. Deoarece se doresc inca alte 2 variante de traducere, se utilizeaza
+un for de la 0 la 2 (2 pasi). Pentru fiecare cuvant al propozitiei traduse se cauta in 
+cuvintele din dictionarul limbii in care s-a tradus (in toate formele acestora) si, daca 
+este gasit se verifica daca acesta are un sinonim. In caz afirmativ, este adaugat la 
+Stringul reprezentand propozitia cu sinonime. Daca nu este gasit niciun sinonim, se 
+adauga cuvantul initial la aceasta propozitie. Daca nu este gasit cuvantul in lista 
+cuvintelor, inseamna ca nu a fost gasita traducere pentru acest cuvant si se returneaza
+traducerea incompleta (cea initiala, ce contine un cuvant netradus). Stringurile create 
+la fiecare pas se adauga listei de traduceri, conditia de oprire fiind cand acest 
+String creat devine egal cu traducerea initiala, din lipsa de sinonime. 
+
+Metoda getDefinitionsForWord intoarce definitiile si sinonimele unui cuvant. Acestea 
+vor fi sortate crescator dupa anul de aparitie al dictionarului. Daca map-ul nu contine
+limba primita ca parametru, atunci se lanseaza o exceptie cu un mesaj corespunzator.
+Se verifica daca exista cuvantul (orice forma a acestuia) in lista corespunzatoare limbii. 
+Daca este gasit, atunci mai intai se sorteaza definitiile care apoi vor fi returnate.
+Sortarea definitiilor se va face utilizand metoda compareTo suprascrisa in clasa 
+Definition. 
+
+Metoda exportDictionary exporteaza un dictionar in format JSON. Cuvintele din JSON sunt
+ordonate alfabetic, iar definitiile sunt ordonate dupa anul de aparitie al dictionarului.
+Daca map-ul nu contine limba primita ca parametru, atunci se lanseaza o exceptie cu un mesaj
+corespunzator. Altfel, mai intai se sorteaza definitiile fiecarui cuvant si apoi cuvintele 
+din lista de cuvinte utilizand metodele compareTo suprascrise in Definition, respectiv 
+Word. Se creeaza (daca nu exista deja) un director out in care se vor salva fisierele 
+JSON generate. Se genereaza un nume corespunzator pentru fisier si daca acesta exista deja 
+va fi sters, urmand a fi inlocuit de noul fisier creat. Se scrie in fisier utilizand gson.
+
+Metodele de testare a metodelor implementate apeleaza aceste metode si afiseaza
+corespunzator in functie de rezultat, prinzand anumite exceptii lansate de acestea.
+
+In cadrul functiei main se testeaza, folosind metodele de testare de mai sus, 
+metodele implementate cu cate 2 exemple, reprezentand un caz normal de utilizare 
+si unul de exceptie. 
+
+Tema a fost realizata folosind Maven. 
